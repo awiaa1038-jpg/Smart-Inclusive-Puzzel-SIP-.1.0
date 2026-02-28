@@ -1,0 +1,27 @@
+{
+  "name": "smart-inclusive-puzzle",
+  "version": "1.0.0",
+  "description": "Smart Inclusive Puzzle (SIP) - Platform Puzzle Digital Interaktif dengan AI & Voice Recognition untuk pembelajaran matematika SD",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 3000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'No build step needed for this project'"
+  },
+  "keywords": [
+    "puzzle",
+    "educational",
+    "interactive",
+    "ai",
+    "voice",
+    "speech-recognition",
+    "mathematics",
+    "kids"
+  ],
+  "author": "Smart Inclusive Puzzle Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/smart-inclusive-puzzle"
+  }
+}

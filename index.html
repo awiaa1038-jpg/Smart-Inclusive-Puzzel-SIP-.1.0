@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Inclusive Puzzle (SIP) - Puzzle Digital Interaktif</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="screen active">
+        <div class="welcome-container">
+            <div class="welcome-content">
+                <h1 class="welcome-title">Smart Inclusive Puzzle</h1>
+                <p class="welcome-subtitle">(SIP)</p>
+                <p class="welcome-description">Selamat datang! Saya adalah asisten AI Anda yang siap membantu Anda menyelesaikan puzzle interaktif dengan soal-soal menarik.</p>
+                
+                <div class="permission-info">
+                    <p class="info-text">⚙️ Kami membutuhkan akses ke microphone Anda untuk berkomunikasi dan mendeteksi jawaban Anda.</p>
+                </div>
+
+                <button id="startBtn" class="btn btn-primary btn-large">
+                    <span class="btn-text">Mulai Sekarang</span>
+                    <span class="btn-voice-hint">atau ucapkan "mulai"</span>
+                </button>
+
+                <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Memproses suara Anda...</p>
+                </div>
+            </div>
+            <div class="welcome-decoration">
+                <div class="float-emoji">🧩</div>
+                <div class="float-emoji">🎓</div>
+                <div class="float-emoji">🎯</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Permission Screen -->
+    <div id="permissionScreen" class="screen">
+        <div class="permission-container">
+            <div class="permission-content">
+                <h2>Izin Akses Microphone</h2>
+                <p class="permission-description">
+                    Untuk pengalaman terbaik, kami membutuhkan izin untuk mengakses microphone Anda. 
+                    Ini hanya diminta sekali dan akan diingat selama Anda menggunakan website ini.
+                </p>
+
+                <div class="permission-benefits">
+                    <h3>Keuntungan dengan microphone:</h3>
+                    <ul>
+                        <li>✅ Dengarkan soal dibacakan oleh AI</li>
+                        <li>✅ Jawab pertanyaan menggunakan suara</li>
+                        <li>✅ Kontrol puzzle dengan voice command</li>
+                        <li>✅ Komunikasi interaktif penuh dengan AI</li>
+                    </ul>
+                </div>
+
+                <div class="button-group">
+                    <button id="allowMicBtn" class="btn btn-success btn-large">Izinkan Microphone</button>
+                    <button id="denyMicBtn" class="btn btn-secondary">Lanjut Tanpa Microphone</button>
+                </div>
+
+                <p class="disclaimer">
+                    💡 Catatan: Fitur suara memerlukan izin microphone. Tanpa izin, Anda hanya bisa menggunakan mode teks.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Screen -->
+    <div id="gameScreen" class="screen">
+        <div class="game-container">
+            <!-- Header -->
+            <header class="game-header">
+                <div class="header-left">
+                    <h1 class="game-title">🧩 Smart Inclusive Puzzle</h1>
+                    <p class="level-info" id="levelInfo">Kepingan: <span id="currentPiece">0</span>/16</p>
+                </div>
+                <div class="header-right">
+                    <span class="mic-status" id="micStatus">🎤 Aktif</span>
+                    <button id="resetBtn" class="btn btn-small btn-danger">Reset</button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="game-content">
+                <!-- AI Message Area -->
+                <div class="ai-message-box">
+                    <div class="ai-avatar">🤖</div>
+                    <div class="message-content">
+                        <p id="aiMessage" class="ai-text">Halo! Mari kita mulai. Tekan tombol atau ucapkan 'mulai' untuk memulai puzzle.</p>
+                        <button id="speakBtn" class="btn btn-small btn-secondary">🔊 Dengarkan Ulang</button>
+                    </div>
+                </div>
+
+                <!-- Puzzle Board Area -->
+                <div class="puzzle-section">
+                    <div class="puzzle-board-wrapper">
+                        <!-- Puzzle Board (Target Area) -->
+                        <div class="puzzle-label">Papan Puzzle</div>
+                        <div id="puzzleBoard" class="puzzle-board">
+                            <!-- Slots akan di-generate oleh JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Puzzle Pieces Area -->
+                    <div class="pieces-section">
+                        <div class="pieces-label">Kepingan Puzzle Tersedia</div>
+                        <div id="puzzlePieces" class="puzzle-pieces">
+                            <!-- Pieces akan di-generate oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Answer Input Area -->
+                <div class="answer-section" id="answerSection" style="display: none;">
+                    <div class="question-display" id="questionDisplay"></div>
+                    
+                    <div class="answer-input-group">
+                        <input 
+                            type="text" 
+                            id="answerInput" 
+                            class="answer-input" 
+                            placeholder="Ketik jawaban atau ucapkan jawabannya..."
+                            autocomplete="off"
+                        >
+                        <button id="submitAnswerBtn" class="btn btn-primary">Kirim Jawaban</button>
+                    </div>
+
+                    <div class="answer-hint" id="answerHint">
+                        <p class="hint-text">💡 Tips: Anda bisa mengetik atau berbicara untuk menjawab. Gunakan tombol di bawah ini atau ucapkan "kirim" untuk mengirim jawaban.</p>
+                    </div>
+
+                    <div class="voice-input-indicator" id="voiceIndicator" style="display: none;">
+                        <div class="voice-wave"></div>
+                        <p>Mendengarkan jawaban Anda...</p>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="startListeningBtn" class="btn btn-info">🎤 Mulai Dengarkan Jawaban</button>
+                        <button id="skipPieceBtn" class="btn btn-secondary">Lewati Kepingan Ini</button>
+                    </div>
+                </div>
+
+                <!-- Results Section (shown after puzzle complete) -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <h2>🎉 Selamat! Puzzle Selesai!</h2>
+                    <p id="completionMessage">Anda telah berhasil menyelesaikan puzzle dengan benar!</p>
+                    <button id="proceedToFinalBtn" class="btn btn-primary btn-large">Lanjut ke Soal Final</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Final Questions Screen -->
+    <div id="finalScreen" class="screen">
+        <div class="final-container">
+            <header class="final-header">
+                <h1>📚 Soal-Soal Akhir</h1>
+                <p class="final-subtitle">Jawab 6 soal ini dengan benar!</p>
+            </header>
+
+            <div class="final-content">
+                <div id="finalQuestionsContainer" class="final-questions">
+                    <!-- Questions akan di-generate oleh JavaScript -->
+                </div>
+
+                <div class="final-button-group">
+                    <button id="showResultsBtn" class="btn btn-primary btn-large">Lihat Hasil Akhir</button>
+                    <button id="restartBtn" class="btn btn-secondary">Mulai Ulang</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Screen -->
+    <div id="completionScreen" class="screen">
+        <div class="completion-container">
+            <div class="completion-content">
+                <h1 class="completion-title">🌟 Luar Biasa!</h1>
+                <p class="completion-text" id="completionText">Anda telah menyelesaikan Smart Inclusive Puzzle dengan sempurna!</p>
+                
+                <div class="completion-stats" id="completionStats">
+                    <!-- Stats akan di-generate oleh JavaScript -->
+                </div>
+
+                <div class="completion-message">
+                    <p>Terima kasih telah menggunakan Smart Inclusive Puzzle. Anda melakukan pekerjaan yang luar biasa!</p>
+                </div>
+
+                <div class="button-group">
+                    <button id="restartCompletionBtn" class="btn btn-primary btn-large">Mulai Ulang</button>
+                    <button id="shareBtn" class="btn btn-secondary">Bagikan Hasil</button>
+                </div>
+            </div>
+
+            <div class="completion-decoration">
+                <div class="confetti" id="confetti"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p id="loadingText">Memproses...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="puzzle-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
